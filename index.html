@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="weatherApp">
+
+<head>
+  <title>Weather Forecast</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+  <script src="app.js"></script>
+</head>
+
+<body ng-controller="WeatherController as weatherCtrl">
+  <h1>Weather Forecast</h1>
+
+  <form ng-submit="weatherCtrl.searchWeather()">
+    <input type="text" ng-model="weatherCtrl.location" placeholder="Enter a city" required>
+    <button type="submit">Search</button>
+  </form>
+
+  <div ng-if="weatherCtrl.weatherData">
+    <h2>Current Weather</h2>
+    <p>{{ weatherCtrl.weatherData.name }}, {{ weatherCtrl.weatherData.sys.country }}</p>
+    <p>{{ weatherCtrl.weatherData.weather[0].description }}</p>
+    <p>Temperature: {{ weatherCtrl.weatherData.main.temp }}°C</p>
+    <p>Humidity: {{ weatherCtrl.weatherData.main.humidity }}%</p>
+
+    <h2>5-Day Forecast</h2>
+    <table>
+      <tr ng-repeat="day in weatherCtrl.forecastData.list">
+        <td>{{ day.dt_txt | date:'EEE' }}</td>
+        <td>{{ day.dt_txt | date:'dd/MM/yyyy' }}</td>
+        <td>{{ day.main.temp }}°C</td>
+        <td>{{ day.weather[0].description }}</td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+
+</html>
